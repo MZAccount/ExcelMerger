@@ -151,7 +151,7 @@ public class ExcelMergerMain {
 
 	//TODO:remake
 	private static Map<String, String> getArguments(String[] ar) {
-		String[] args=ar[0].split(" ");
+		String[] args=ar;
 		HashMap<String, String> x = new HashMap<String, String>();
 		for (int i = 0; i < args.length; i++) {
 			if (Options.match(args[i]) != null) {

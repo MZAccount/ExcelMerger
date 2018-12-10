@@ -29,8 +29,8 @@ public class ExcelMergerTest {
 		String testName = name.getMethodName();
 		new ExcelMergerMain();
 
-		ExcelMergerMain.main(new String[] {
-				"-i testData\\" + testName + "\\input\\input1.xlsx -o testData\\" + testName + "\\output\\out.xlsx" });
+		ExcelMergerMain.main((
+				"-i testData\\" + testName + "\\input\\input1.xlsx -o testData\\" + testName + "\\output\\out.xlsx" ).split(" "));
 
 		assertOutputFiles(testName);
 	}
@@ -40,8 +40,8 @@ public class ExcelMergerTest {
 		String testName = name.getMethodName();
 		new ExcelMergerMain();
 
-		ExcelMergerMain.main(new String[] { "-i testData\\" + testName + "\\input\\input1.xlsx testData\\" + testName
-				+ "\\input\\input2.xlsx -o testData\\" + testName + "\\output\\out.xlsx" });
+		ExcelMergerMain.main(( "-i testData\\" + testName + "\\input\\input1.xlsx testData\\" + testName
+				+ "\\input\\input2.xlsx -o testData\\" + testName + "\\output\\out.xlsx" ).split(" "));
 
 		assertOutputFiles(testName);
 	}
@@ -51,8 +51,8 @@ public class ExcelMergerTest {
 		String testName = name.getMethodName();
 		new ExcelMergerMain();
 
-		ExcelMergerMain.main(new String[] {
-				"-i testData\\" + testName + "\\input -o testData\\" + testName + "\\output\\out.xlsx" });
+		ExcelMergerMain.main(
+				("-i testData\\" + testName + "\\input -o testData\\" + testName + "\\output\\out.xlsx" ).split(" "));
 
 		assertOutputFiles(testName);
 	}

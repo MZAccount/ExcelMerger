@@ -13,85 +13,88 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.jupiter.api.Test;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
 
 import main.ExcelMergerMain;
 
 public class ExcelMergerTest {
 
-	
+	@Rule
+	public TestName name = new TestName();
 
+	@Test
+	public void test1() {
+		String testName = name.getMethodName();
+		new ExcelMergerMain();
 
-    @Test
-    public void test1() {
-        ExcelMergerMain tester = new ExcelMergerMain(); // ExcelMergerMain is tested
+		ExcelMergerMain.main(new String[] {
+				"-i testData\\" + testName + "\\input\\input1.xlsx -o testData\\" + testName + "\\output\\out.xlsx" });
 
-        ExcelMergerMain.main(new String[]{"C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test1\\input\\input1.xlsx"});
-        
-    }
+		assertOutputFiles(testName);
+	}
 
+	@Test
+	public void test2() {
+		String testName = name.getMethodName();
+		new ExcelMergerMain();
 
-    @Test
-    public void test2() {
-        ExcelMergerMain tester = new ExcelMergerMain(); // ExcelMergerMain is tested
+		ExcelMergerMain.main(new String[] { "-i testData\\" + testName + "\\input\\input1.xlsx testData\\" + testName
+				+ "\\input\\input2.xlsx -o testData\\" + testName + "\\output\\out.xlsx" });
 
-        ExcelMergerMain.main(new String[]{"C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test2\\input\\input1.xlsx C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test1\\input\\input2.xlsx"});
-        
-    }
-	
+		assertOutputFiles(testName);
+	}
 
+	@Test
+	public void test3() {
+		String testName = name.getMethodName();
+		new ExcelMergerMain();
 
-    @Test
-    public void test3() {
-        ExcelMergerMain tester = new ExcelMergerMain(); // ExcelMergerMain is tested
+		ExcelMergerMain.main(new String[] {
+				"-i testData\\" + testName + "\\input -o testData\\" + testName + "\\output\\out.xlsx" });
 
-        ExcelMergerMain.main(new String[]{"-i testData\\test3\\input -o testData\\test3\\output\\out.xlsx"});
-        
-        File file1 = new File("testData\\test3\\output\\out.xlsx");
-        File file2 = new File("testData\\test3\\referenceOutput\\out.xlsx");
-        
+		assertOutputFiles(testName);
+	}
 
-        Sheet sheet1 = null;
-        Sheet sheet2 = null;
+	private void assertOutputFiles(String testName) {
+		File file1 = new File("testData\\" + testName + "\\output\\out.xlsx");
+		File file2 = new File("testData\\" + testName + "\\referenceOutput\\out.xlsx");
+
+		Sheet sheet1 = null;
+		Sheet sheet2 = null;
 		try {
 			FileInputStream file;
 			file = new FileInputStream(file1);
-			
-				Workbook workbook;
-				workbook = new XSSFWorkbook(file);
-				Sheet sheet = workbook.getSheetAt(0);
-				sheet1 = sheet;
-			} catch (IOException e) {
-				@SuppressWarnings("unused")
-				String s="it broke";
+
+			try(Workbook workbook = new XSSFWorkbook(file)){
+			Sheet sheet = workbook.getSheetAt(0);
+			sheet1 = sheet;
 			}
-		
-		
+		} catch (IOException e) {
+		}
+
 		assertNotNull(sheet1);
 		try {
 			FileInputStream file;
 			file = new FileInputStream(file2);
 			try {
-				Workbook workbook;
-				workbook = new XSSFWorkbook(file);
+				try(Workbook workbook = new XSSFWorkbook(file)){
 				Sheet sheet = workbook.getSheetAt(0);
-				sheet2 = sheet;
+				sheet2 = sheet;}
 			} catch (IOException e) {
 			}
 		} catch (FileNotFoundException e1) {
 		}
 		assertNotNull(sheet2);
 
-		
-		
-        boolean isTwoEqual = checkEqual(sheet1,sheet2);
+		boolean isTwoEqual = checkEqual(sheet1, sheet2);
 		assertTrue(isTwoEqual);
-    }
-
+	}
 
 	private boolean checkEqual(Sheet sheet1, Sheet sheet2) {
-		ArrayList l1=new ArrayList();
-		ArrayList l2=new ArrayList();
+		ArrayList<String> l1 = new ArrayList<String>();
+		ArrayList<String> l2 = new ArrayList<String>();
 		for (Row row : sheet1) {
 			l1.add(row.toString());
 		}
@@ -100,6 +103,5 @@ public class ExcelMergerTest {
 		}
 		return l1.equals(l2);
 	}
-	
-	
+
 }

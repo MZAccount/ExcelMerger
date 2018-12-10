@@ -3,14 +3,12 @@ package test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -28,7 +26,7 @@ public class ExcelMergerTest {
     public void test1() {
         ExcelMergerMain tester = new ExcelMergerMain(); // ExcelMergerMain is tested
 
-        tester.main(new String[]{"C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test1\\input\\input1.xlsx"});
+        ExcelMergerMain.main(new String[]{"C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test1\\input\\input1.xlsx"});
         
     }
 
@@ -37,7 +35,7 @@ public class ExcelMergerTest {
     public void test2() {
         ExcelMergerMain tester = new ExcelMergerMain(); // ExcelMergerMain is tested
 
-        tester.main(new String[]{"C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test2\\input\\input1.xlsx C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test1\\input\\input2.xlsx"});
+        ExcelMergerMain.main(new String[]{"C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test2\\input\\input1.xlsx C:\\Users\\Uber\\git\\ExcelMerger\\ExcelMerger\\testData\\test1\\input\\input2.xlsx"});
         
     }
 	
@@ -47,7 +45,7 @@ public class ExcelMergerTest {
     public void test3() {
         ExcelMergerMain tester = new ExcelMergerMain(); // ExcelMergerMain is tested
 
-        tester.main(new String[]{"-i testData\\test3\\input -o testData\\test3\\output\\out.xlsx"});
+        ExcelMergerMain.main(new String[]{"-i testData\\test3\\input -o testData\\test3\\output\\out.xlsx"});
         
         File file1 = new File("testData\\test3\\output\\out.xlsx");
         File file2 = new File("testData\\test3\\referenceOutput\\out.xlsx");
